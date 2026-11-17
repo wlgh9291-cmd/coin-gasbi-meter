@@ -1,0 +1,43 @@
+{
+  "lang": "ko",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "categories": [
+    "finance",
+    "utilities"
+  ],
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "name": "코인가스비미터 — 보내기 전 가스비·김프 확인",
+  "short_name": "가스비미터",
+  "description": "코인을 보내기 전에 이더리움 가스비를 원화로, 김치프리미엄까지 한 화면에서 확인하는 무료·비수익 참고 도구입니다. 제작·운영: 안심랩 (AnsimLab)",
+  "background_color": "#f6f4ff",
+  "theme_color": "#f6f4ff"
+}
