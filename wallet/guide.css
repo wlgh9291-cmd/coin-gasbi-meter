@@ -1,0 +1,715 @@
+/* 코인가스비미터 — 「비수탁 지갑 이체 가스비·오입금 체크」 정적 페이지 스타일.
+   앱(src/ui/styles.css)과 같은 색 토큰을 써서 같은 서비스로 보이게 하고,
+   글을 읽기 편하도록 본문 폭만 넓혔습니다(최대 780px). 외부 폰트·이미지 요청 없음. */
+
+:root {
+  --violet: #5b21f0;
+  --violet-deep: #3c0fb8;
+  --violet-soft: #ede7ff;
+  --orange: #ff6a00;
+  --orange-soft: #fff0e5;
+  --ink: #16132b;
+  --muted: #6a6584;
+  --line: #e8e3fb;
+  --bg: #f6f4ff;
+  --card: #ffffff;
+  --good: #0e9f6e;
+  --warn: #d97706;
+  --radius: 18px;
+  --shadow: 0 10px 30px rgba(35, 20, 90, 0.07);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Pretendard', 'Malgun Gothic', system-ui,
+    sans-serif;
+  font-size: 16px;
+  line-height: 1.72;
+  -webkit-font-smoothing: antialiased;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+a {
+  color: var(--violet-deep);
+  text-underline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  padding: 10px 16px;
+  background: var(--card);
+  border-radius: 0 0 12px 0;
+  z-index: 10;
+}
+
+.skip:focus {
+  left: 0;
+}
+
+/* ── 머리말 ───────────────────────────────────────────── */
+.site-head {
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--card) 70%, transparent);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.site-head-inner {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brand-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  background: var(--violet);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.brand-needle {
+  width: 14px;
+  height: 3px;
+  border-radius: 3px;
+  background: #fff;
+  transform: rotate(-38deg);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.28);
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.brand-text strong {
+  font-size: 15px;
+  letter-spacing: -0.01em;
+}
+
+.brand-text small {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.head-link {
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: var(--violet-soft);
+  color: var(--violet-deep);
+  white-space: nowrap;
+}
+
+/* ── 본문 ─────────────────────────────────────────────── */
+.page {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 28px 20px 60px;
+}
+
+.eyebrow {
+  margin: 8px 0 10px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--violet-deep);
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0 0 16px;
+  font-size: clamp(26px, 6vw, 34px);
+  line-height: 1.32;
+  letter-spacing: -0.025em;
+}
+
+h1 em {
+  font-style: normal;
+  color: var(--violet);
+}
+
+.lead {
+  margin: 0 0 26px;
+  color: var(--muted);
+  font-size: 16.5px;
+}
+
+.lead strong {
+  color: var(--ink);
+}
+
+[id] {
+  scroll-margin-top: 76px;
+}
+
+h2 {
+  margin: 40px 0 10px;
+  font-size: 21px;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  margin: 0 0 6px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.section-lead {
+  margin: 0 0 16px;
+  color: var(--muted);
+}
+
+.section-lead strong {
+  color: var(--ink);
+}
+
+.fine {
+  margin: 12px 0 0;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+/* ── 카드·10초 설명 ───────────────────────────────────── */
+.card {
+  margin: 22px 0 8px;
+  padding: 20px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.card-title {
+  margin: 0 0 12px;
+  font-size: 17px;
+  color: var(--violet-deep);
+  letter-spacing: -0.01em;
+}
+
+.steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 14px;
+}
+
+.steps li {
+  display: grid;
+  grid-template-columns: 26px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+.steps p {
+  margin: 0;
+}
+
+.step-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 99px;
+  background: var(--violet-soft);
+  color: var(--violet-deep);
+  font-size: 13px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+
+/* ── 가스비 표 ────────────────────────────────────────── */
+.table-wrap {
+  margin: 6px 0 0;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+.fee-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 520px;
+  font-size: 15px;
+}
+
+.fee-table caption {
+  text-align: left;
+}
+
+.fee-table th,
+.fee-table td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+
+.fee-table thead th {
+  font-size: 12.5px;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  background: color-mix(in srgb, var(--violet-soft) 55%, var(--card));
+  font-weight: 700;
+}
+
+.fee-table tbody th {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.fee-table tbody tr:last-child th,
+.fee-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.fee-table .num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+  white-space: nowrap;
+  font-weight: 700;
+}
+
+.fee-table [data-cell='token-krw'] {
+  color: var(--violet-deep);
+}
+
+.row-accent th,
+.row-accent td {
+  background: color-mix(in srgb, var(--violet-soft) 34%, transparent);
+}
+
+.fee-table[data-state='error'] .num {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.live-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.live-status {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.btn-refresh {
+  appearance: none;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--violet-deep);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.btn-refresh:hover {
+  background: var(--violet-soft);
+}
+
+.btn-refresh:disabled {
+  opacity: 0.55;
+  cursor: progress;
+}
+
+.callout {
+  margin: 18px 0 0;
+  padding: 16px 18px;
+  border-radius: var(--radius);
+  background: var(--orange-soft);
+  border: 1px solid color-mix(in srgb, var(--orange) 25%, transparent);
+}
+
+.callout-title {
+  margin: 0 0 4px;
+  font-weight: 800;
+  color: #a63c00;
+}
+
+.callout p:last-child {
+  margin: 0;
+  font-size: 14.5px;
+}
+
+/* ── 체크리스트 ───────────────────────────────────────── */
+.checklist {
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+  display: grid;
+  gap: 10px;
+}
+
+.checklist li {
+  counter-increment: step;
+  position: relative;
+  padding: 16px 18px 16px 52px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.checklist li::before {
+  content: counter(step);
+  position: absolute;
+  left: 16px;
+  top: 17px;
+  width: 24px;
+  height: 24px;
+  border-radius: 99px;
+  background: var(--violet);
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.checklist strong {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--ink);
+}
+
+.checklist li {
+  font-size: 15px;
+  color: var(--muted);
+}
+
+/* ── 목록·FAQ ─────────────────────────────────────────── */
+.plain-list {
+  margin: 10px 0 0;
+  padding-left: 4px;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.plain-list li {
+  position: relative;
+  padding-left: 24px;
+  font-size: 15px;
+}
+
+.plain-list li::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 11px;
+  width: 7px;
+  height: 7px;
+  border-radius: 99px;
+  background: var(--violet);
+}
+
+.faq {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.faq article {
+  padding: 16px 18px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.faq h3 {
+  color: var(--violet-deep);
+}
+
+.faq p {
+  margin: 0;
+  font-size: 14.8px;
+  color: var(--muted);
+}
+
+/* ── CTA·법적 고지 ────────────────────────────────────── */
+.cta p {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn-primary {
+  display: inline-block;
+  padding: 13px 20px;
+  border-radius: 14px;
+  background: var(--violet);
+  color: #fff;
+  font-weight: 800;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.btn-primary:hover {
+  background: var(--violet-deep);
+}
+
+.btn-ghost {
+  display: inline-block;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  color: var(--violet-deep);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.legal {
+  margin-top: 34px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+
+.legal h2 {
+  margin: 0 0 10px;
+  font-size: 16px;
+}
+
+.legal ul {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 8px;
+}
+
+.legal li {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.legal strong {
+  color: var(--ink);
+}
+
+.site-foot {
+  margin-top: 30px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  font-size: 12.5px;
+  color: var(--muted);
+  display: grid;
+  gap: 4px;
+}
+
+.site-foot p {
+  margin: 0;
+}
+
+.foot-badge {
+  display: inline-block;
+  font-weight: 800;
+  color: var(--violet-deep);
+}
+
+.noscript-note {
+  max-width: 780px;
+  margin: 0 auto 40px;
+  padding: 0 20px;
+  font-size: 13.5px;
+  color: var(--muted);
+}
+
+/* ── 좁은 화면 ────────────────────────────────────────── */
+@media (max-width: 560px) {
+  body {
+    font-size: 15.5px;
+    line-height: 1.7;
+  }
+
+  .page {
+    padding: 20px 16px 48px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  /* 좁은 화면에서는 표를 카드처럼 세로로 펼칩니다(가로 스크롤·글자 잘림 방지). */
+  .table-wrap {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    overflow: visible;
+  }
+
+  .fee-table {
+    display: block;
+    min-width: 0;
+    width: 100%;
+    font-size: 15px;
+  }
+
+  .fee-table thead {
+    display: none;
+  }
+
+  .fee-table tbody,
+  .fee-table tr {
+    display: block;
+  }
+
+  .fee-table tr {
+    margin-bottom: 10px;
+    padding: 13px 15px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+  }
+
+  .row-accent th,
+  .row-accent td {
+    background: transparent;
+  }
+
+  .fee-table tbody th {
+    display: block;
+    padding: 0 0 8px;
+    border: 0;
+    font-size: 15.5px;
+    white-space: normal;
+  }
+
+  .fee-table tbody td {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 5px 0;
+    border: 0;
+    white-space: normal;
+    text-align: right;
+  }
+
+  .fee-table tbody td::before {
+    content: attr(data-label);
+    flex: none;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    text-align: left;
+  }
+
+  .head-link {
+    font-size: 12px;
+    padding: 7px 10px;
+  }
+
+  h2 {
+    margin-top: 34px;
+  }
+}
+
+/* ── 다크 모드 (기기 설정 연동) ───────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f0c1c;
+    --card: #1a1630;
+    --ink: #f1eefc;
+    --muted: #a9a3c4;
+    --line: #2b2550;
+    --violet: #a78bff;
+    --violet-deep: #cbbaff;
+    --violet-soft: #241d44;
+    --orange: #ff9a5c;
+    --orange-soft: #2c2118;
+    --shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+  }
+
+  .callout-title {
+    color: #ffbd8f;
+  }
+
+  .brand-needle {
+    background: #1a1630;
+    box-shadow: 0 0 0 2px rgba(26, 22, 48, 0.4);
+  }
+
+  .btn-primary {
+    color: #16132b;
+  }
+
+  .checklist li::before {
+    color: #16132b;
+  }
+
+  .btn-primary {
+    background: var(--violet);
+  }
+}

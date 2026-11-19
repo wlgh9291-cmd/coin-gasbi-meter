@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>USDT·USDC 보낼 때 ETH 가스비 — 비수탁 지갑 이체 수수료·오입금 체크</title>
+    <meta
+      name="description"
+      content="USDT·USDC를 보내는데 왜 ETH 가스비가 필요할까요? 비수탁 코인지갑에서 ETH 전송과 USDT·USDC(ERC-20) 전송에 드는 이더리움 가스비를 원화로 비교하고, ETH가 없을 때 생기는 문제와 국내 거래소 입금·트래블룰 체크리스트를 한 화면에 정리했습니다. 무료·비수익 참고 도구."
+    />
+    <meta
+      name="keywords"
+      content="USDT 전송 가스비, USDC 보내기 ETH, ERC-20 전송 수수료, 비수탁 지갑 가스비, 이더리움 가스비 원화, ETH 없이 USDT 전송, 트래블룰 개인지갑 입금, 코인 오입금 확인"
+    />
+    <meta name="author" content="안심랩 (AnsimLab)" />
+    <meta name="publisher" content="안심랩 (AnsimLab)" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://wlgh9291-cmd.github.io/coin-gasbi-meter/wallet/" />
+
+    <meta name="theme-color" content="#f6f4ff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f0c1c" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light dark" />
+
+    <link rel="icon" type="image/png" sizes="32x32" href="../icons/icon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../icons/favicon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../icons/apple-touch-icon.png" />
+    <link rel="stylesheet" href="./guide.css" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="코인가스비미터" />
+    <meta property="og:title" content="USDT·USDC 보낼 때 ETH 가스비 — 비수탁 지갑 이체 수수료·오입금 체크" />
+    <meta
+      property="og:description"
+      content="ETH 전송과 USDT·USDC(ERC-20) 전송의 가스비를 지금 값으로 원화 비교. ETH가 없을 때 막히는 것과 국내 거래소 입금·트래블룰 체크리스트를 정리했습니다."
+    />
+    <meta property="og:image" content="https://wlgh9291-cmd.github.io/coin-gasbi-meter/og/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:url" content="https://wlgh9291-cmd.github.io/coin-gasbi-meter/wallet/" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="USDT·USDC 보낼 때 ETH 가스비 — 비수탁 지갑 이체 수수료·오입금 체크" />
+    <meta
+      name="twitter:description"
+      content="ETH 전송과 USDT·USDC(ERC-20) 전송의 가스비를 지금 값으로 원화 비교. 국내 거래소 입금·트래블룰 체크리스트 포함."
+    />
+    <meta name="twitter:image" content="https://wlgh9291-cmd.github.io/coin-gasbi-meter/og/og-image.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "코인가스비미터",
+                "item": "https://wlgh9291-cmd.github.io/coin-gasbi-meter/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "비수탁 지갑 이체 가스비·오입금 체크",
+                "item": "https://wlgh9291-cmd.github.io/coin-gasbi-meter/wallet/"
+              }
+            ]
+          },
+          {
+            "@type": "WebPage",
+            "name": "USDT·USDC 보낼 때 ETH 가스비 — 비수탁 지갑 이체 수수료·오입금 체크",
+            "url": "https://wlgh9291-cmd.github.io/coin-gasbi-meter/wallet/",
+            "inLanguage": "ko",
+            "description": "비수탁 코인지갑에서 ETH와 USDT·USDC(ERC-20)를 보낼 때 드는 이더리움 가스비를 원화로 비교하고, 국내 거래소 입금·트래블룰 체크리스트를 정리한 무료 참고 페이지입니다.",
+            "datePublished": "2026-11-20",
+            "dateModified": "2026-11-20",
+            "isPartOf": { "@type": "WebSite", "name": "코인가스비미터", "url": "https://wlgh9291-cmd.github.io/coin-gasbi-meter/" },
+            "author": { "@type": "Organization", "name": "안심랩 (AnsimLab)" },
+            "publisher": { "@type": "Organization", "name": "안심랩 (AnsimLab)" }
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "USDT를 보내는데 왜 ETH가 필요한가요?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "USDT·USDC는 이더리움 위에서 움직이는 토큰입니다. 토큰을 옮기는 계산도 이더리움 네트워크가 하기 때문에, 그 값을 네트워크의 기본 코인인 ETH로 냅니다. 그래서 지갑에 USDT가 있어도 수수료로 낼 ETH가 없으면 전송이 되지 않습니다."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "USDT나 USDC로 가스비를 낼 수는 없나요?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "이더리움 네트워크의 수수료는 ETH로만 낼 수 있습니다. USDT·USDC를 수수료로 쓰려면 별도의 대납 서비스가 필요하고, 일반적인 지갑에서는 지원하지 않습니다. 보내기 전에 지갑에 소량의 ETH를 준비해 두세요."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "가스비는 보내는 사람과 받는 사람 중 누가 내나요?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "보내는 사람이 냅니다. 받는 사람은 수수료를 부담하지 않지만, 받는 주소가 처음이거나 토큰 상태에 따라 가스가 조금 더 들 수 있습니다."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "ETH 전송과 USDT·USDC 전송의 가스비 차이는 얼마나 되나요?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "ETH 단순 전송은 21,000 gas로 고정되어 있고, ERC-20 토큰 전송은 보통 45,000~70,000 gas가 듭니다. 같은 가스 가격이라면 토큰 전송이 ETH 전송보다 2~3배 정도 더 듭니다. 이 페이지의 표는 넉넉히 잡은 65,000 gas 기준으로 계산합니다."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "가스비는 왜 시간마다 달라지나요?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "이더리움은 블록마다 기본 수수료가 정해지고, 네트워크가 붐비면 올라갑니다. 같은 전송이라도 새벽과 낮에 값이 다를 수 있어, 보내기 직전 값으로 확인하는 편이 안전합니다."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "지갑에 있는 코인을 원화로 바로 바꿀 수 있나요?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "비수탁형 지갑은 코인을 보관하고 주고받는 기능만 하며 원화로 바꿔 주지 않습니다. 현금화하려면 원화를 취급하는 국내 거래소 계정으로 보낸 뒤 매도해야 하고, 매도 대금을 받으려면 실명 확인된 입출금 계정이 필요합니다."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "개인 지갑에서 거래소로 보낼 때 무엇을 확인해야 하나요?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "그때그때 발급받은 입금 주소인지, 네트워크가 이더리움(ERC-20)으로 같은지, 최소 입금 수량을 넘는지, 주소 사전 등록이나 지갑 소유 확인을 요구하는 곳인지 확인하세요. 100만원 상당 이상을 옮길 때는 송·수신인 정보를 함께 보내야 하는 트래블룰이 적용됩니다."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "잘못 보낸 코인은 되돌릴 수 있나요?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "블록체인에 기록된 전송은 취소나 환불이 되지 않습니다. 받는 쪽에 문의할 수는 있지만 회수를 보장하지 않으므로, 처음 보내는 주소는 소액으로 먼저 시험하는 편이 안전합니다."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">본문으로 바로 가기</a>
+
+    <header class="site-head">
+      <div class="site-head-inner">
+        <a class="brand" href="../">
+          <span class="brand-mark" aria-hidden="true"><span class="brand-needle"></span></span>
+          <span class="brand-text">
+            <strong>코인가스비미터</strong>
+            <small>무료 · 비수익 · 광고 없음</small>
+          </span>
+        </a>
+        <a class="head-link" href="../">가스비 계산기 열기 →</a>
+      </div>
+    </header>
+
+    <main id="main" class="page">
+      <p class="eyebrow">비수탁 지갑 이체 가이드</p>
+      <h1>
+        USDT·USDC를 보내는데<br />
+        <em>왜 ETH 가스비</em>가 나올까?
+      </h1>
+      <p class="lead">
+        비수탁형 코인지갑에서 달러 코인(USDT·USDC)을 보내려면, 이더리움 네트워크 수수료를 <strong>ETH로 함께</strong> 내야
+        합니다. 지금 값이 얼마인지, ETH가 없을 때 무엇이 막히는지, 국내 거래소로 옮길 때 무엇을 확인해야 하는지 한 화면에
+        정리했습니다.
+      </p>
+
+      <section class="card" aria-labelledby="tensec">
+        <h2 id="tensec" class="card-title">10초 설명</h2>
+        <ol class="steps">
+          <li>
+            <span class="step-num" aria-hidden="true">1</span>
+            <p>
+              <strong>USDT·USDC는 이더리움 위에서 움직이는 토큰입니다.</strong> 토큰을 옮기는 계산도 이더리움 네트워크가 하므로,
+              그 값을 네트워크의 기본 코인인 <strong>ETH</strong>로 냅니다.
+            </p>
+          </li>
+          <li>
+            <span class="step-num" aria-hidden="true">2</span>
+            <p>
+              <strong>지갑에 USDT가 100개 있어도 ETH가 0이면 전송이 실패합니다.</strong> 수수료를 낼 ETH가 없기 때문입니다.
+              전송 버튼을 눌렀는데 오류가 나면 십중팔구 ETH 잔액이 비어 있는 경우입니다.
+            </p>
+          </li>
+          <li>
+            <span class="step-num" aria-hidden="true">3</span>
+            <p>
+              <strong>토큰 전송은 ETH 전송보다 가스가 2~3배 더 듭니다.</strong> ETH 전송은 21,000 gas로 고정, USDT·USDC 전송은
+              보통 45,000~70,000 gas입니다. 아래 표는 넉넉히 잡은 65,000 gas로 계산합니다.
+            </p>
+          </li>
+        </ol>
+      </section>
+
+      <section aria-labelledby="livetable">
+        <h2 id="livetable">지금 이더리움 기준 예상 가스비</h2>
+        <p class="section-lead">
+          가스비는 <strong>보내는 사람</strong>이 냅니다. 아래 값은 공개 이더리움 노드에서 읽은 30초 전후의 가스 가격과 국내 원화
+          시세로 계산한 참고값이며, 실제 전송 시점의 값과 다를 수 있습니다.
+        </p>
+
+        <div class="table-wrap">
+          <table class="fee-table" id="fee-table" data-state="loading">
+            <caption class="sr-only">
+              지금 이더리움 네트워크에서 ETH 전송과 USDT·USDC 전송에 드는 예상 가스비
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">보내는 것</th>
+                <th scope="col">쓰는 가스</th>
+                <th scope="col">필요한 ETH</th>
+                <th scope="col">원화 환산</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">ETH (이더리움)</th>
+                <td data-label="쓰는 가스">21,000 gas</td>
+                <td class="num" data-label="필요한 ETH" data-cell="eth-native">—</td>
+                <td class="num" data-label="원화 환산" data-cell="eth-krw">—</td>
+              </tr>
+              <tr class="row-accent">
+                <th scope="row">USDT · USDC (ERC-20)</th>
+                <td data-label="쓰는 가스">65,000 gas 안팎</td>
+                <td class="num" data-label="필요한 ETH" data-cell="token-native">—</td>
+                <td class="num" data-label="원화 환산" data-cell="token-krw">—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="live-bar">
+          <p class="live-status" id="live-status" role="status" aria-live="polite">지금 값을 읽는 중…</p>
+          <button type="button" class="btn-refresh" id="refresh-btn">다시 읽기</button>
+        </div>
+
+        <p class="fine" id="live-note">
+          표의 가스 사용량은 ETH 21,000(프로토콜 고정), USDT·USDC 65,000(받는 주소가 처음이거나 토큰 상태에 따라
+          45,000~70,000 사이에서 달라짐)을 기준으로 한 넉넉한 값입니다. 빠른 처리를 원하면 여기에 20~30%가 더 붙을 수 있습니다.
+        </p>
+
+        <div class="callout">
+          <p class="callout-title">ETH가 0이면 USDT도 보낼 수 없습니다</p>
+          <p>
+            지갑에 USDT·USDC만 있고 ETH가 없다면, 먼저 ETH를 조금 받아 두세요. ETH를 받는 것도 같은 이더리움 네트워크라
+            보내는 쪽이 수수료를 냅니다. 작은 금액이라도 남겨 두면 급할 때 막히지 않습니다.
+          </p>
+        </div>
+      </section>
+
+      <section aria-labelledby="checklist">
+        <h2 id="checklist">원화로 바꿀 수 없을 때 — 거래소 입금·트래블룰 체크리스트</h2>
+        <p class="section-lead">
+          비수탁형 지갑은 코인을 보관하고 주고받는 기능만 하며, 원화로 바꿔 주지 않습니다. 현금화하려면 원화를 취급하는 국내
+          거래소 계정으로 옮겨 매도해야 합니다. 옮기기 전에 아래 8가지를 확인하세요.
+        </p>
+
+        <ol class="checklist">
+          <li>
+            <strong>입금 주소는 그때그때 새로 발급받기.</strong>
+            거래소 입금 주소는 사람마다 다르고, 다시 발급하면 바뀔 수 있습니다. 예전에 받아 둔 주소로 보내면 반영되지 않을 수
+            있습니다.
+          </li>
+          <li>
+            <strong>네트워크가 이더리움(ERC-20)으로 같은지.</strong>
+            거래소 입금 화면에 적힌 네트워크와 지갑의 전송 네트워크가 달라지면 받는 쪽에서 확인할 수 없습니다. 다른 네트워크로
+            잘못 보낸 코인은 회수가 매우 어렵습니다.
+          </li>
+          <li>
+            <strong>최소 입금 수량을 넘는지.</strong>
+            거래소는 코인별로 최소 입금량을 두고, 그보다 적으면 반영하지 않는 경우가 있습니다. 가스비를 빼고 남는 수량도 함께
+            확인하세요.
+          </li>
+          <li>
+            <strong>100만원 상당 이상이면 송·수신인 정보가 함께 갑니다.</strong>
+            국내 가상자산사업자 사이에서 100만원 상당 이상을 이전할 때는 송신인·수신인 정보를 함께 보내야 합니다(특정금융정보법,
+            2022년 3월 25일 시행). 개인 지갑에서 거래소로 보낼 때는 거래소가 지갑 소유 확인을 요구할 수 있습니다.
+          </li>
+          <li>
+            <strong>주소 사전 등록(화이트리스트)이 필요한 곳인지.</strong>
+            개인 지갑 주소를 미리 등록해야 입금을 받아 주는 거래소가 많고, 소액 시험 전송이나 서명 확인을 요구하기도 합니다.
+            급할 때 하면 시간이 걸리니 미리 해 두세요.
+          </li>
+          <li>
+            <strong>제도가 바뀌는 중입니다.</strong>
+            2026년 8월 시행령 개정으로 사업자 간 이전의 금액 기준(100만원)을 없애고 개인 지갑의 동일인 확인을 넣는 내용이
+            마련됐고, 관련 조항은 공포 후 6개월이 지난 2027년 2월부터 적용될 예정입니다. 실제 적용 방식은 거래소 공지와 금융당국
+            자료로 확인하세요.
+          </li>
+          <li>
+            <strong>입금 반영까지 시간이 걸립니다.</strong>
+            이더리움은 정해진 확인 블록 수를 채운 뒤 거래소에 반영됩니다. 네트워크가 붐비면 몇 분에서 수십 분 걸릴 수 있습니다.
+          </li>
+          <li>
+            <strong>원화 출금 계정이 있어야 매도 대금을 받습니다.</strong>
+            거래소의 실명 확인된 입출금 계정이 없으면 원화로 매도·출금할 수 없습니다.
+          </li>
+        </ol>
+
+        <p class="fine">
+          제도와 거래소 정책은 바뀔 수 있습니다. 이 페이지는 2026년 11월 20일까지 공개된 자료를 기준으로 정리한 참고 안내이며,
+          법률·세무·투자 자문이 아닙니다.
+        </p>
+      </section>
+
+      <section aria-labelledby="mistakes">
+        <h2 id="mistakes">오입금을 막는 6가지</h2>
+        <ul class="plain-list">
+          <li>보내기 전에 받는 주소의 <strong>앞 6자리와 뒤 6자리</strong>를 눈으로 확인합니다.</li>
+          <li>
+            붙여넣은 주소가 <strong>복사한 주소와 같은지 다시</strong> 확인합니다. 클립보드의 주소를 바꿔치기하는 악성 코드가
+            있습니다.
+          </li>
+          <li>처음 보내는 곳은 <strong>소액으로 먼저</strong> 보내 보고, 반영되는 것을 확인한 뒤 본 금액을 보냅니다.</li>
+          <li>코인 종류와 네트워크(ERC-20)를 <strong>보내는 쪽과 받는 쪽에서 같게</strong> 맞춥니다.</li>
+          <li>거래소라면 <strong>최소 입금 수량·입금 주소·태그(있는 경우)</strong>를 입금 화면에서 확인합니다.</li>
+          <li>
+            한 번 보낸 전송은 <strong>취소·환불이 되지 않습니다.</strong> 받는 쪽에 문의할 수는 있지만 회수가 보장되지 않습니다.
+          </li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="faq">
+        <h2 id="faq">자주 묻는 질문</h2>
+        <div class="faq">
+          <article>
+            <h3>USDT를 보내는데 왜 ETH가 필요한가요?</h3>
+            <p>
+              USDT·USDC는 이더리움 위에서 움직이는 토큰입니다. 토큰을 옮기는 계산도 이더리움 네트워크가 하기 때문에, 그 값을
+              네트워크의 기본 코인인 ETH로 냅니다. 그래서 지갑에 USDT가 있어도 수수료로 낼 ETH가 없으면 전송이 되지 않습니다.
+            </p>
+          </article>
+          <article>
+            <h3>USDT나 USDC로 가스비를 낼 수는 없나요?</h3>
+            <p>
+              이더리움 네트워크의 수수료는 ETH로만 낼 수 있습니다. USDT·USDC를 수수료로 쓰려면 별도의 대납 서비스가 필요하고,
+              일반적인 지갑에서는 지원하지 않습니다. 보내기 전에 지갑에 소량의 ETH를 준비해 두세요.
+            </p>
+          </article>
+          <article>
+            <h3>가스비는 보내는 사람과 받는 사람 중 누가 내나요?</h3>
+            <p>
+              보내는 사람이 냅니다. 받는 사람은 수수료를 부담하지 않지만, 받는 주소가 처음이거나 토큰 상태에 따라 가스가 조금 더
+              들 수 있습니다.
+            </p>
+          </article>
+          <article>
+            <h3>ETH 전송과 USDT·USDC 전송의 가스비 차이는 얼마나 되나요?</h3>
+            <p>
+              ETH 단순 전송은 21,000 gas로 고정되어 있고, ERC-20 토큰 전송은 보통 45,000~70,000 gas가 듭니다. 같은 가스
+              가격이라면 토큰 전송이 ETH 전송보다 2~3배 정도 더 듭니다. 이 페이지의 표는 넉넉히 잡은 65,000 gas 기준으로
+              계산합니다.
+            </p>
+          </article>
+          <article>
+            <h3>가스비는 왜 시간마다 달라지나요?</h3>
+            <p>
+              이더리움은 블록마다 기본 수수료가 정해지고, 네트워크가 붐비면 올라갑니다. 같은 전송이라도 새벽과 낮에 값이 다를 수
+              있어, 보내기 직전 값으로 확인하는 편이 안전합니다.
+            </p>
+          </article>
+          <article>
+            <h3>지갑에 있는 코인을 원화로 바로 바꿀 수 있나요?</h3>
+            <p>
+              비수탁형 지갑은 코인을 보관하고 주고받는 기능만 하며 원화로 바꿔 주지 않습니다. 현금화하려면 원화를 취급하는 국내
+              거래소 계정으로 보낸 뒤 매도해야 하고, 매도 대금을 받으려면 실명 확인된 입출금 계정이 필요합니다.
+            </p>
+          </article>
+          <article>
+            <h3>개인 지갑에서 거래소로 보낼 때 무엇을 확인해야 하나요?</h3>
+            <p>
+              그때그때 발급받은 입금 주소인지, 네트워크가 이더리움(ERC-20)으로 같은지, 최소 입금 수량을 넘는지, 주소 사전 등록이나
+              지갑 소유 확인을 요구하는 곳인지 확인하세요. 100만원 상당 이상을 옮길 때는 송·수신인 정보를 함께 보내야 하는
+              트래블룰이 적용됩니다.
+            </p>
+          </article>
+          <article>
+            <h3>잘못 보낸 코인은 되돌릴 수 있나요?</h3>
+            <p>
+              블록체인에 기록된 전송은 취소나 환불이 되지 않습니다. 받는 쪽에 문의할 수는 있지만 회수를 보장하지 않으므로, 처음
+              보내는 주소는 소액으로 먼저 시험하는 편이 안전합니다.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="card cta" aria-labelledby="cta">
+        <h2 id="cta" class="card-title">지금 값으로 직접 계산해 보세요</h2>
+        <p>
+          코인가스비미터는 이더리움·베이스·아비트럼·BNB 체인 등 여러 체인의 가스비와 김치프리미엄을 원화로 보여 주는 무료
+          도구입니다. 지갑을 연결하지 않고, 주소를 입력받지도 않습니다.
+        </p>
+        <p class="cta-row">
+          <a class="btn-primary" href="../">실시간 가스비 계산기 열기</a>
+          <a class="btn-ghost" href="https://ansim-signal.vercel.app/privacy/">내 지갑 주소 공개 노출 점검 →</a>
+        </p>
+      </section>
+
+      <section class="legal" aria-labelledby="legal">
+        <h2 id="legal">꼭 알아 두세요</h2>
+        <ul>
+          <li>
+            <strong>비공식 무료 참고 도구</strong>입니다. 제작·운영: 안심랩 (AnsimLab). 특정 지갑 서비스·거래소·코인 발행사와
+            <strong>제휴·보증·후원 관계가 없습니다.</strong> 각 상표는 해당 소유자의 것입니다.
+          </li>
+          <li>
+            화면의 가스비·원화 환산은 공개 이더리움 노드와 공개 시세로 계산한 <strong>참고값</strong>이며, 실제 전송 시점의 수수료와
+            다를 수 있습니다. 전송이 지연되거나 실패할 수 있습니다.
+          </li>
+          <li>
+            <strong>투자·세무·법률 자문이 아닙니다.</strong> 일부러 특정 지갑·거래소 이용을 권하지 않습니다.
+          </li>
+          <li>
+            이 페이지와 연결된 도구의 이용, 그리고 그 판단으로 발생한 직·간접적 손해(오입금, 거래 손실, 전송 실패 등)에 대해
+            제작자는 어떠한 법적·금전적 배상 책임도 지지 않습니다.
+          </li>
+          <li>
+            <strong>광고·유료 결제·후원·제휴(레퍼럴) 링크를 두지 않으며, 어떤 개인정보도 수집·저장하지 않습니다(Zero-PII).</strong>
+            지갑 주소·전화번호를 입력받지 않고, 쿠키나 분석 스크립트를 쓰지 않습니다.
+          </li>
+        </ul>
+      </section>
+
+      <footer class="site-foot">
+        <p class="foot-badge">무료 · 비수익 · 광고 없음</p>
+        <p>자료 기준일 2026-11-20 · 가스 사용량: 이더리움 프로토콜 고정값(21,000 gas)과 공개 문서의 ERC-20 전송 범위</p>
+        <p>자료: 공개 이더리움 노드 · 국내 거래소 공개 시세 · 특정금융정보법 시행령 및 공개 보도</p>
+        <p>제작·운영: 안심랩 (AnsimLab)</p>
+      </footer>
+    </main>
+
+    <noscript>
+      <p class="noscript-note">
+        지금 가스비는 자바스크립트를 켜야 표시됩니다. 표의 칸이 비어 있어도 위의 설명과 체크리스트는 그대로 볼 수 있고, 실시간
+        값은 <a href="../">계산기 화면</a>에서도 확인할 수 있습니다.
+      </p>
+    </noscript>
+
+    <script src="./live.js" defer></script>
+  </body>
+</html>
